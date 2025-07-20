@@ -16,6 +16,7 @@ const StepEleven = () => {
 
     const checkTruckRegistration = async () => {
         console.log("Button clicked!")
+        // ADd time stap from Javascript
     }
 
     return (
@@ -30,6 +31,7 @@ const StepEleven = () => {
                     keyboardType = "default"
                     value = {containerNumber}
                     onChangeText = {setContainerNumber}/>
+                    
 
 
                 <ThemedButton onPress = {checkTruckRegistration}>

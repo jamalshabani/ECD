@@ -1,6 +1,7 @@
 import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 import { Link } from "expo-router";
 import { useState } from "react";
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 
 import ThemedView from "../components/ThemedView";
@@ -12,10 +13,24 @@ import ThemedTextInput from "../components/ThemedTextInput";
 
 const StepThree = () => {
 
-    const [containerNumber, setContainerNumber] = useState("")
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { stepThreeData } = route.params;
 
-    const checkTruckRegistration = async () => {
-        console.log("Button clicked!")
+    const [containerNumber, setContainerNumber] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
+
+    const checkContainerNumber = () => {
+        if (containerNumber === "") {
+            setErrorMessage("Please enter the container number!")
+        } else {
+            if (containerNumber === stepThreeData.ContainerNumber){
+                setErrorMessage("")
+                navigation.navigate('stepfour', { stepFourData: stepThreeData });
+            } else {
+                setErrorMessage("That container number is not correct!")
+            }
+        }
     }
 
     return (
@@ -23,7 +38,7 @@ const StepThree = () => {
             <ThemedView style = {styles.container}>
                 <Spacer/>
                 <ThemedText style = {styles.title} title = {true}>Step 3: Enter the Container Number</ThemedText>
-                
+                {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
                 <ThemedTextInput 
                     style = {{ width: "90%", marginBottom: 10}} 
                     placeholder = "Enter the container number"
@@ -32,7 +47,7 @@ const StepThree = () => {
                     onChangeText = {setContainerNumber}/>
 
 
-                <ThemedButton onPress = {checkTruckRegistration}>
+                <ThemedButton onPress = {checkContainerNumber}>
                     <Text style = {{ color: "#f2f2f2", fontWeight: "bold", textAlign: "center"}}>Next</Text>
                 </ThemedButton>
 
@@ -59,5 +74,6 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         fontWeight: "bold",
         fontSize: 18,
-    }
+    },
+    errorText: { color: 'red', marginBottom: 10 }
 })
