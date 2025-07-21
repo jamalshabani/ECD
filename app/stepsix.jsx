@@ -41,7 +41,7 @@ const StepSix = () => {
     }
 
     const takePicture = async () => {
-        const options = {quality: 0.5, base64: true, exif: false, base64: true };
+        const options = {quality: 0.1, exif: false, base64: true };
         const photo = await ref.current?.takePictureAsync(options);
         setUri(photo?.uri);
 
