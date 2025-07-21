@@ -6,7 +6,6 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { useNavigation, useRoute } from '@react-navigation/native';
-import axios from 'axios';
 
 import ThemedText from "../components/ThemedText";
 import ThemedButton from "../components/ThemedButton";
@@ -74,13 +73,12 @@ const StepSeven = () => {
     const renderPicture = () => {
         return (
             <View>
-                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Step 5: Photo of the Container 3/6</ThemedText>
+                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Step 5: Photo 3/6 - Left Side</ThemedText>
                 <Image
                     source={{ uri }}
                     style={{ width: "90%", aspectRatio: 1 }}
                 />
                 <Spacer height = {10}/>
-
                 <Spacer height = {10}/>
                 <ThemedButton onPress = { goToStepEight } style={{width:"90% !important"}}>
                     <Text style = {{ color: "#f2f2f2", fontWeight: "bold", textAlign: "center"}}>Next</Text>
@@ -100,7 +98,7 @@ const StepSeven = () => {
                 mute = {false}
                 responsiveOrientationWhenOrientationLocked
             ></CameraView>
-                <ThemedText style = {styles.title} title = {true}>Step 5: Take 6 Photos of the Container(Photo 3)</ThemedText>
+                <ThemedText style = {styles.title} title = {true}>Step 5: Take 6 Photos of the Container(Photo 3 - Left Side)</ThemedText>
                 <View style={styles.shutterContainer}>
                     <Pressable onPress={toggleMode}>
                         {mode === "picture" ? (

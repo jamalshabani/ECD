@@ -73,13 +73,12 @@ const StepFive = () => {
     const renderPicture = () => {
         return (
             <View>
-                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Step 5: Photo of the Container 1/6</ThemedText>
+                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Step 5: Photo 1/6 - Right Side</ThemedText>
                 <Image
                     source={{ uri }}
                     style={{ width: "90%", aspectRatio: 1 }}
                 />
                 <Spacer height = {10}/>
-
                 <Spacer height = {10}/>
                 <ThemedButton onPress = { goToStepSix } style={{width:"90% !important"}}>
                     <Text style = {{ color: "#f2f2f2", fontWeight: "bold", textAlign: "center"}}>Next</Text>
@@ -99,7 +98,7 @@ const StepFive = () => {
                 mute = {false}
                 responsiveOrientationWhenOrientationLocked
             ></CameraView>
-                <ThemedText style = {styles.title} title = {true}>Step 5: Take 6 Photos of the Container(Photo 1)</ThemedText>
+                <ThemedText style = {styles.title} title = {true}>Step 5: Take 6 Photos of the Container(Photo 1 - Right Side)</ThemedText>
                 <View style={styles.shutterContainer}>
                     <Pressable onPress={toggleMode}>
                         {mode === "picture" ? (

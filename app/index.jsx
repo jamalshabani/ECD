@@ -82,6 +82,7 @@ const Home = () => {
                 </ThemedButton>
 
                 <Spacer/>
+                <Link href = "/stepfour">NEXT</Link>
 
             </ThemedView>
         </TouchableWithoutFeedback>

@@ -6,7 +6,6 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { useNavigation, useRoute } from '@react-navigation/native';
-import axios from 'axios';
 
 import ThemedText from "../components/ThemedText";
 import ThemedButton from "../components/ThemedButton";
@@ -81,7 +80,6 @@ const StepFour = () => {
                     style={{ width: "90%", aspectRatio: 1 }}
                 />
                 <Spacer height = {10}/>
-
                 <Spacer height = {10}/>
                 <ThemedButton onPress = { goToStepFive } style={{width:"90% !important"}}>
                     <Text style = {{ color: "#f2f2f2", fontWeight: "bold", textAlign: "center"}}>Next</Text>
