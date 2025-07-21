@@ -20,7 +20,7 @@ const StepThree = () => {
     const [containerNumber, setContainerNumber] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
 
-    const checkContainerNumber = () => {
+    const goToStepFour = () => {
         if (containerNumber === "") {
             setErrorMessage("Please enter the container number!")
         } else {
@@ -47,12 +47,11 @@ const StepThree = () => {
                     onChangeText = {setContainerNumber}/>
 
 
-                <ThemedButton onPress = {checkContainerNumber}>
+                <ThemedButton onPress = {goToStepFour}>
                     <Text style = {{ color: "#f2f2f2", fontWeight: "bold", textAlign: "center"}}>Next</Text>
                 </ThemedButton>
 
                 <Spacer height = {100}/>
-                <Link href="/stepfour">NEXT</Link>
 
             </ThemedView>
         </TouchableWithoutFeedback>

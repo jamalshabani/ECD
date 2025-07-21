@@ -1,55 +1,148 @@
-import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
-import { Link } from "expo-router";
-import { useState } from "react";
-import { Ionicons } from '@expo/vector-icons'
+import {CameraView, useCameraPermissions} from "expo-camera";
+import { useRef, useState } from "react";
+import { Button, Pressable, StyleSheet, Text, View} from "react-native";
+import { Image } from "expo-image";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Feather from "@expo/vector-icons/Feather";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { useNavigation, useRoute } from '@react-navigation/native';
+import axios from 'axios';
 
-
-import ThemedView from "../components/ThemedView";
-import Spacer from "../components/Spacer";
 import ThemedText from "../components/ThemedText";
 import ThemedButton from "../components/ThemedButton";
-import ThemedTextInput from "../components/ThemedTextInput";
-
+import Spacer from "../components/Spacer";
 
 const StepNine = () => {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const navigation = useNavigation();
 
-    const handleSubmit = async () => {
-        console.log("Button clicked!")
+    const route = useRoute();
+    const { stepNineData } = route.params;
+
+    const [permission, requestPermission] = useCameraPermissions();
+    const ref = useRef(null);
+    const [uri, setUri] = useState(null);
+    const [mode, setMode] = useState("picture");
+    const [facing, setFacing] = useState("back");
+    const [recording, setRecording] = useState(false);
+
+    if (!permission) {
+        return null;
     }
 
-    return (
-        <TouchableWithoutFeedback onPress = {Keyboard.dismiss}>
-            <ThemedView style = {styles.container}>
-                <Spacer/>
-                <ThemedText style = {styles.title} title = {true}>Step 5: Take 6 Photos of the Container</ThemedText>
-                <ThemedButton style = {{height: "300", justifyContent: "center"}} onPress = {handleSubmit}>
-                    <Text style = {{ color: "#f2f2f2", fontWeight: "bold", textAlign: "center"}}>
-                        <Ionicons 
-                        name = {'camera'} 
-                        size = {50}
-                        color = {"#f2f2f2"} />
-                    </Text>
-                    <Text style = {{ color: "#f2f2f2", fontWeight: "bold", textAlign: "center"}}>Take Photo of the Undercarriage</Text>
-                </ThemedButton>
+    if (!permission.granted) {
+        return (
+            <View style={styles.container}>
+                <Text style={{ textAlign: "center" }}>
+                    We need your permission to use the camera
+                </Text>
+                <Button onPress = {requestPermission} title="Grant permission" />
+            </View>
+        );
+    }
 
+    const takePicture = async () => {
+        const options = {quality: 0.5, base64: true, exif: false, base64: true };
+        const photo = await ref.current?.takePictureAsync(options);
+        setUri(photo?.uri);
 
-                <Spacer height = {20}/>
+        stepNineData.PhotoFive = photo.base64
+    };
 
-                <ThemedButton onPress = {handleSubmit}>
+    const goToStepTen = async () => {
+        navigation.navigate('stepten', { stepTenData: stepNineData });
+    }
+
+    const recordVideo = async () => {
+        if (recording) {
+            setRecording(false);
+            ref.current?.stopRecording();
+            return;
+        }
+        setRecording(true);
+        const video = await ref.current?.recordAsync();
+    };
+
+    const toggleMode = () => {
+        setMode((prev) => (prev === "picture" ? "picture" : "picture"));
+    };
+
+    const toggleFacing = () => {
+        setFacing((prev) => (prev === "back" ? "front" : "back"));
+    };
+
+    const renderPicture = () => {
+        return (
+            <View>
+                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Step 5: Photo of the Container 5/6</ThemedText>
+                <Image
+                    source={{ uri }}
+                    style={{ width: "90%", aspectRatio: 1 }}
+                />
+                <Spacer height = {10}/>
+
+                <Spacer height = {10}/>
+                <ThemedButton onPress = { goToStepTen } style={{width:"90% !important"}}>
                     <Text style = {{ color: "#f2f2f2", fontWeight: "bold", textAlign: "center"}}>Next</Text>
                 </ThemedButton>
+            </View>
+        );
+    };
 
-                <Spacer height = {100}/>
-                <Link href="/stepsix">NEXT</Link>
+    const renderCamera = () => {
+        return (
+            <>
+            <CameraView
+                style = {styles.camera}
+                ref = {ref}
+                mode = {mode}
+                facing = {facing}
+                mute = {false}
+                responsiveOrientationWhenOrientationLocked
+            ></CameraView>
+                <ThemedText style = {styles.title} title = {true}>Step 5: Take 6 Photos of the Container(Photo 5)</ThemedText>
+                <View style={styles.shutterContainer}>
+                    <Pressable onPress={toggleMode}>
+                        {mode === "picture" ? (
+                            <AntDesign name="picture" size={32} color="white" />
+                        ) : (
+                            <Feather name="video" size={32} color="white" />
+                        )}
+                    </Pressable>
+                    <Pressable onPress={mode === "picture" ? takePicture : recordVideo}>
+                        {({ pressed }) => (
+                            <View
+                                style={[
+                                    styles.shutterBtn,
+                                    {
+                                        opacity: pressed ? 0.5 : 1,
+                                    },
+                                ]}
+                            >
+                                <View
+                                    style={[
+                                        styles.shutterBtnInner,
+                                        {
+                                            backgroundColor: mode === "picture" ? "white" : "red",
+                                        },
+                                    ]}
+                                />
+                            </View>
+                        )}
+                    </Pressable>
+                    <Pressable onPress={toggleFacing}>
+                        <FontAwesome6 name="rotate-left" size={32} color="white" />
+                    </Pressable>
+                </View>
+            </>
+        );
+    };
 
-            </ThemedView>
-            
-        </TouchableWithoutFeedback>
-
-    )
+    return (
+        <View style={styles.container}>
+            {uri ? renderPicture() : renderCamera()}
+        </View>
+    );
 }
 
 export default StepNine
@@ -57,14 +150,49 @@ export default StepNine
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
         justifyContent: "center",
-        alignItems: "center"
     },
-
+    camera: {
+        flex: 1,
+        width: "100%",
+    },
+    shutterContainer: {
+        position: "absolute",
+        bottom: 44,
+        left: 0,
+        width: "100%",
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingHorizontal: 30,
+    },
     title: {
+        position: "absolute",
+        top: 80,
+        width: "100%",
         textAlign: "center",
-        marginBottom: 30,
         fontWeight: "bold",
         fontSize: 18,
-    }
-})
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "center",
+        paddingHorizontal: 30,
+    },
+    shutterBtn: {
+        backgroundColor: "transparent",
+        borderWidth: 5,
+        borderColor: "white",
+        width: 85,
+        height: 85,
+        borderRadius: 45,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    shutterBtnInner: {
+        width: 70,
+        height: 70,
+        borderRadius: 50,
+    },
+});

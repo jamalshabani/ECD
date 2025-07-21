@@ -42,13 +42,11 @@ const StepTwo = () => {
     }
 
     const takePicture = async () => {
-        const options = {quality: 1, base64: true, exif: false, base64: true };
+        const options = {quality: 0.5, base64: true, exif: false, base64: true };
         const photo = await ref.current?.takePictureAsync(options);
         setUri(photo?.uri);
 
-        //stepTwoData.TruckPhoto = photo
-        stepTwoData.TruckPhoto = "Base64Image"
-        // upload this photo
+        stepTwoData.TruckPhoto = photo.base64
     };
 
     const goToStepThree = async () => {
@@ -76,7 +74,7 @@ const StepTwo = () => {
     const renderPicture = () => {
         return (
             <View>
-                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Step 2: Take Photo of the Truck</ThemedText>
+                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Step 2: Photo of the Truck</ThemedText>
                 <Image
                     source={{ uri }}
                     style={{ width: "90%", aspectRatio: 1 }}
@@ -93,14 +91,15 @@ const StepTwo = () => {
 
     const renderCamera = () => {
         return (
+            <>
             <CameraView
-                style={styles.camera}
-                ref={ref}
-                mode={mode}
-                facing={facing}
-                mute={false}
+                style = {styles.camera}
+                ref = {ref}
+                mode = {mode}
+                facing = {facing}
+                mute = {false}
                 responsiveOrientationWhenOrientationLocked
-            >
+            ></CameraView>
                 <ThemedText style = {styles.title} title = {true}>Step 2: Take Photo of the Truck</ThemedText>
                 <View style={styles.shutterContainer}>
                     <Pressable onPress={toggleMode}>
@@ -135,7 +134,7 @@ const StepTwo = () => {
                         <FontAwesome6 name="rotate-left" size={32} color="white" />
                     </Pressable>
                 </View>
-            </CameraView>
+            </>
         );
     };
 

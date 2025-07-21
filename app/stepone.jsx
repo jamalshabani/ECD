@@ -37,7 +37,9 @@ const StepOne = () => {
                     setErrorMessage("That Trip Segment does not exist")
                 } else {
                     setErrorMessage("")
-                    const TripSegment = response.data.response.data[0].fieldData;
+                    
+                    let TripSegment = response.data.response.data[0].fieldData;
+                    TripSegment.ID = response.data.response.data[0].recordId;
                     navigation.navigate('steptwo', { stepTwoData: TripSegment });
                 }
             } catch (error) {

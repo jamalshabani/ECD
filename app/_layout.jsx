@@ -27,6 +27,7 @@ const RootLayout = () => {
                 <Stack.Screen name = "stepnine" options = {{ headerShown: false, gestureEnabled: false}}></Stack.Screen>
                 <Stack.Screen name = "stepten" options = {{ headerShown: false, gestureEnabled: false }}></Stack.Screen>
                 <Stack.Screen name = "stepeleven" options = {{ headerShown: false, gestureEnabled: false }}></Stack.Screen>
+                <Stack.Screen name = "steptwelve" options = {{ headerShown: false, gestureEnabled: false }}></Stack.Screen>
             </Stack>
         </>
     )
