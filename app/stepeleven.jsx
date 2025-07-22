@@ -1,5 +1,4 @@
 import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
-import { Link } from "expo-router";
 import { useState } from "react";
 import { useNavigation, useRoute } from '@react-navigation/native';
 import axios from 'axios';
@@ -93,7 +92,6 @@ const StepEleven = () => {
                 </ThemedButton>
 
                 <Spacer height = {100}/>
-                <Link href="/stepone">NEXT</Link>
 
             </ThemedView>
         </TouchableWithoutFeedback>

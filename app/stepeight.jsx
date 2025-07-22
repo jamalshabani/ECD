@@ -73,6 +73,8 @@ const StepEight = () => {
     const renderPicture = () => {
         return (
             <View>
+                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Truck Number: {stepEightData.TruckNumber}</ThemedText>
+                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Truck Number: {stepEightData.ContainerNumber}</ThemedText>
                 <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Step 5: Photo 4/6 - Ceiling</ThemedText>
                 <Image
                     source={{ uri }}

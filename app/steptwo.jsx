@@ -41,7 +41,7 @@ const StepTwo = () => {
     }
 
     const takePicture = async () => {
-        const options = {quality: 0.1, exif: false, base64: true };
+        const options = {quality: 1.0, exif: false, base64: true };
         const photo = await ref.current?.takePictureAsync(options);
         setUri(photo?.uri);
 
@@ -73,6 +73,7 @@ const StepTwo = () => {
     const renderPicture = () => {
         return (
             <View>
+                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Truck Number: {stepTwoData.TruckNumber}</ThemedText>
                 <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Step 2: Photo of the Truck</ThemedText>
                 <Image
                     source={{ uri }}

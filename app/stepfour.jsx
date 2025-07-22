@@ -74,6 +74,8 @@ const StepFour = () => {
     const renderPicture = () => {
         return (
             <View>
+                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Truck Number: {stepFourData.TruckNumber}</ThemedText>
+                <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Truck Number: {stepFourData.ContainerNumber}</ThemedText>
                 <ThemedText style = {{fontWeight: "bold", fontSize: 18, marginBottom: 20, textAlign: "center"}} title = {true}>Step 4: Photo of the Container</ThemedText>
                 <Image
                     source={{ uri }}

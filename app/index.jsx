@@ -1,6 +1,6 @@
 import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 import { useState } from "react";
-import { Link } from "expo-router";
+import { Link } from 'expo-router'
 import axios from 'axios';
 import Base64 from 'react-native-base64';
 import { useNavigation } from '@react-navigation/native';
@@ -80,9 +80,12 @@ const Home = () => {
                 <ThemedButton onPress = {handleSubmit}>
                     <Text style = {{ color: "#f2f2f2", fontWeight: "bold", textAlign: "center"}}>Login</Text>
                 </ThemedButton>
+                
 
                 <Spacer/>
-                <Link href = "/stepfour">NEXT</Link>
+                <Spacer/>
+                <Spacer/>
+
 
             </ThemedView>
         </TouchableWithoutFeedback>
